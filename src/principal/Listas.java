@@ -10,31 +10,42 @@ import java.util.Scanner;
 public class Listas {
     static Scanner input = new Scanner(System.in);
     static List<String> lista = new ArrayList<>();
+    
     public static void main(String[] args) {
         System.out.print("Ingrese la cantidad de elementos: ");
-        int cant = input.nextInt();
-        input.nextLine();
+        int cant = 0;
+        boolean error;
+        do {            
+            try{
+                error = false;
+                cant = input.nextInt();
+            }
+            catch(java.util.InputMismatchException e){
+                System.out.print("Porfavor ingresa un numero: "); 
+                error = true;
+            }
+            input.nextLine();
+        } while (error);
+        
         int i = 0;
         while (i < cant){
             String opciones = opciones();
             switch (opciones){
                 case "a" -> {a_opciones(); i++;}
-
-                case "b" -> {
-                    if (lista.isEmpty()){
-                        System.out.println("No hay elementos a eliminar. Elija otra opcion");
-                        continue;
-                    }
-                    lista.remove(lista.indexOf(input.nextLine()));
-                }
+                case "b" -> {if(b_opcion()){i--;}}
+                case "c" -> c_opcion();
+                case "d" -> d_opcion();
+                case "e" -> e_opcion();
+                case "f" -> f_opcion();
+                case "g" -> g_opcion();
+                default -> System.out.println("Opcion no disponible");
             }
-            System.out.println(lista);
         }
     }
     
     public static String opciones(){
         System.out.println("""
-                           a.Insertar Nodo
+                           \na.Insertar Nodo
                            b.Eliminar Nodo
                            c.Buscar Nodo
                            d.Tamaño de la Lista
@@ -46,28 +57,114 @@ public class Listas {
     }
     
     public static void a_opciones(){
+        boolean lista_vacia = false;
+        String opcion = "";
+        int index = 0;
         System.out.println("""
                            a.Insertar Nodo al inicio
-                           b.Insertar Nodo al final
-                           c.Insertar Nodo antes del Elemento X
-                           d.Insertar Nodo después del Elemento X""");
-        System.out.print("\nSeleccionar opcion: ");
-        String opcion = input.nextLine();
-        int index = 0;
-        switch (opcion) {
-            case "b" -> index=lista.size();
-            case "c" -> {
-                System.out.print("Agregar valor antes del elemento: ");
-                index = lista.indexOf(input.nextLine());
+                           b.Insertar Nodo al final""");
+        if (lista.isEmpty()){
+            lista_vacia = true;
+        }else{
+            System.out.println("""
+                               c.Insertar Nodo antes del Elemento X
+                               d.Insertar Nodo despues del Elemento X""");
+        }
+        while (opcion.isEmpty()){            
+            System.out.print("\nSeleccionar opcion: ");
+            opcion = input.nextLine().toLowerCase();
+        
+            if (lista_vacia && (!opcion.equals("a") && !opcion.equals("b"))){
+                opcion = "";
             }
-            case "d" -> {
-                System.out.print("Agregar valor despues del elemento: ");
-                index = lista.indexOf(input.nextLine())+1;
+            switch (opcion) {
+                case "a" -> index = 0;
+                case "b" -> index = lista.size();
+                case "c" -> {
+                    System.out.print("Agregar valor antes del elemento: ");
+                    index = lista.indexOf(input.nextLine());
+                }
+                case "d" -> {
+                    System.out.print("Agregar valor despues del elemento: ");
+                    index = lista.indexOf(input.nextLine())+1;
+                }
+                default -> System.out.println("Opcion no disponible");
+
             }
         }
-        System.out.print("Ingrese el valor a agregar: ");
+            System.out.print("Ingrese el valor a agregar: ");
+            String valor = input.nextLine();
+        try{
+            lista.add(index, valor);
+            System.out.println("El valor " + valor + " agregado");
+        }
+        catch (IndexOutOfBoundsException e){
+            valor_no_encontrado(valor);
+        }
+    }
+    
+    public static boolean b_opcion(){
+        if (lista.isEmpty()){
+            System.out.println("No hay nodos a eliminar");
+            return false;
+        }
+        System.out.print("Ingresar elemento a eliminar: ");
         String valor = input.nextLine();
-        lista.add(index, valor);
-        System.out.println("El valor " + valor + " agregado\n");
+        try{
+            lista.remove(lista.indexOf(valor));
+            System.out.println("Valor: " + valor + " eliminado");
+        } catch (IndexOutOfBoundsException e){
+            valor_no_encontrado(valor);
+        }
+        return true;
+    }
+    
+    public static boolean c_opcion(){
+        if (lista.isEmpty()){
+            System.out.println("No hay nodos a buscar");
+            return false;
+        }
+        System.out.print("Ingresar elemento a buscar: ");
+        String valor = input.nextLine();
+        int index = lista.indexOf(valor);
+        if (index == -1){
+            valor_no_encontrado(valor);
+        }else{
+            System.out.println(valor + " encontrado en la posicion: " + index);
+        }
+        return true;
+    }
+    
+    public static void d_opcion(){
+        if (lista.isEmpty()){
+            System.out.println("La lista esta vacia");
+        } else{
+            System.out.println("Tamaño de la lista es: ");
+        }
+    }
+    
+    public static void e_opcion(){
+        if (lista.isEmpty()){
+            System.out.println("La lista esta vacia");
+        } else{
+            System.out.println("La lista NO esta vacia");
+        }
+    }
+    
+    public static void f_opcion(){
+        System.out.println("Contenido de la lista: " + lista);
+    }
+    
+    public static void g_opcion(){
+        lista.clear();
+        System.out.println("Contenido de la lista eliminado");
+    }
+    
+    private static void valor_no_encontrado(Object valor){
+        if (lista.isEmpty()){
+                System.out.println("La lista esta vacia");
+        }
+        System.out.println("No se encontro el elemento: " + 
+                valor + " en la lista\n");
     }
 }
