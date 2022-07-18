@@ -37,7 +37,7 @@ public class Listas {
                 case "d" -> d_opcion();
                 case "e" -> e_opcion();
                 case "f" -> f_opcion();
-                case "g" -> g_opcion();
+                case "g" -> {if(g_opcion()){i=0;}}
                 default -> System.out.println("Opcion no disponible");
             }
         }
@@ -57,15 +57,14 @@ public class Listas {
     }
     
     public static void a_opciones(){
-        boolean lista_vacia = false;
+        boolean lista_vacia = lista.isEmpty();
         String opcion = "";
+        String elemento = "";
         int index = 0;
         System.out.println("""
                            a.Insertar Nodo al inicio
                            b.Insertar Nodo al final""");
-        if (lista.isEmpty()){
-            lista_vacia = true;
-        }else{
+        if (!lista_vacia){
             System.out.println("""
                                c.Insertar Nodo antes del Elemento X
                                d.Insertar Nodo despues del Elemento X""");
@@ -82,11 +81,13 @@ public class Listas {
                 case "b" -> index = lista.size();
                 case "c" -> {
                     System.out.print("Agregar valor antes del elemento: ");
-                    index = lista.indexOf(input.nextLine());
+                    elemento = input.nextLine();
+                    index = lista.indexOf(elemento);
                 }
                 case "d" -> {
                     System.out.print("Agregar valor despues del elemento: ");
-                    index = lista.indexOf(input.nextLine())+1;
+                    elemento = input.nextLine();
+                    index = lista.indexOf(elemento)+1;
                 }
                 default -> System.out.println("Opcion no disponible");
 
@@ -99,7 +100,7 @@ public class Listas {
             System.out.println("El valor " + valor + " agregado");
         }
         catch (IndexOutOfBoundsException e){
-            valor_no_encontrado(valor);
+            elemento_no_encontrado(elemento);
         }
     }
     
@@ -109,12 +110,12 @@ public class Listas {
             return false;
         }
         System.out.print("Ingresar elemento a eliminar: ");
-        String valor = input.nextLine();
+        String elemento = input.nextLine();
         try{
-            lista.remove(lista.indexOf(valor));
-            System.out.println("Valor: " + valor + " eliminado");
+            lista.remove(lista.indexOf(elemento));
+            System.out.println("Valor: " + elemento + " eliminado");
         } catch (IndexOutOfBoundsException e){
-            valor_no_encontrado(valor);
+            elemento_no_encontrado(elemento);
         }
         return true;
     }
@@ -128,7 +129,7 @@ public class Listas {
         String valor = input.nextLine();
         int index = lista.indexOf(valor);
         if (index == -1){
-            valor_no_encontrado(valor);
+            elemento_no_encontrado(valor);
         }else{
             System.out.println(valor + " encontrado en la posicion: " + index);
         }
@@ -139,7 +140,7 @@ public class Listas {
         if (lista.isEmpty()){
             System.out.println("La lista esta vacia");
         } else{
-            System.out.println("Tamaño de la lista es: ");
+            System.out.println("Tamaño de la lista es: " + lista.size());
         }
     }
     
@@ -155,12 +156,13 @@ public class Listas {
         System.out.println("Contenido de la lista: " + lista);
     }
     
-    public static void g_opcion(){
+    public static boolean g_opcion(){
         lista.clear();
         System.out.println("Contenido de la lista eliminado");
+        return true;
     }
     
-    private static void valor_no_encontrado(Object valor){
+    private static void elemento_no_encontrado(Object valor){
         if (lista.isEmpty()){
                 System.out.println("La lista esta vacia");
         }
