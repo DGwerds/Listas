@@ -10,10 +10,10 @@ import java.util.Scanner;
 public class Listas {
     static Scanner input = new Scanner(System.in);
     static List<String> lista = new ArrayList<>();
+    static int cant = 0;
     
     public static void main(String[] args) {
         System.out.print("Ingrese la cantidad de elementos: ");
-        int cant = 0;
         boolean error;
         do {            
             try{
@@ -26,34 +26,43 @@ public class Listas {
             }
             input.nextLine();
         } while (error);
-        
-        int i = 0;
-        while (i < cant){
+        boolean loop = true;
+        while (loop){
             String opciones = opciones();
             switch (opciones){
-                case "a" -> {a_opciones(); i++;}
-                case "b" -> {if(b_opcion()){i--;}}
+                case "a" -> {a_opciones(); cant--;}
+                case "b" -> {if(b_opcion()){cant++;}}
                 case "c" -> c_opcion();
                 case "d" -> d_opcion();
                 case "e" -> e_opcion();
                 case "f" -> f_opcion();
-                case "g" -> {if(g_opcion()){i=0;}}
+                case "g" -> {if(g_opcion()){cant=0;}}
+                case "h" -> loop = false;
                 default -> System.out.println("Opcion no disponible");
             }
         }
     }
     
     public static String opciones(){
+        System.out.print("\na.Insertar Nodo");
+        if (cant == 0){
+            System.out.print(" (No disponible)");
+        }
         System.out.println("""
-                           \na.Insertar Nodo
-                           b.Eliminar Nodo
+                           \nb.Eliminar Nodo
                            c.Buscar Nodo
-                           d.Tamaño de la Lista
+                           d.Tamanio de la Lista
                            e.Comprobar Lista Vacia
                            f.Mostrar Lista
-                           g.Vaciar Lista""");
+                           g.Vaciar Lista
+                           h.Salir""");
         System.out.print("\nSeleccionar opcion: ");
-        return input.nextLine();
+        
+        String in = input.nextLine().toLowerCase();
+        if (cant == 0 && in.equals("a")){
+            return "_";
+        }
+        return in;
     }
     
     public static void a_opciones(){
