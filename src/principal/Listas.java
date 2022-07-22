@@ -2,10 +2,10 @@ package principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.Random;
 /**
  *
- * @author Santiago Andres Delgado 211799
+ * @author Santiago Andres Delgado 2211799
  */
 public class Listas {
     static Scanner input = new Scanner(System.in);
@@ -13,9 +13,9 @@ public class Listas {
     static int cant = 0;
     
     public static void main(String[] args) {
-        System.out.print("Ingrese la cantidad de elementos: ");
+        System.out.print("Ingrese la cantidad de nodos: ");
         boolean error;
-        do {            
+        do {
             try{
                 error = false;
                 cant = input.nextInt();
@@ -26,17 +26,22 @@ public class Listas {
             }
             input.nextLine();
         } while (error);
+        Random random = new Random();
+        for(int i = 0; i < cant; i++){
+            lista.add(Integer.toString(random.nextInt(cant+1)));
+        }
+        mostrarLista();
         boolean loop = true;
         while (loop){
             String opciones = opciones();
             switch (opciones){
-                case "a" -> {a_opciones(); cant--;}
-                case "b" -> {if(b_opcion()){cant++;}}
-                case "c" -> c_opcion();
-                case "d" -> d_opcion();
-                case "e" -> e_opcion();
-                case "f" -> f_opcion();
-                case "g" -> {if(g_opcion()){cant=0;}}
+                case "a" -> {opciones_insertar(); cant--;}
+                case "b" -> {if(eliminar()){cant++;}}
+                case "c" -> buscar();
+                case "d" -> tamanio();
+                case "e" -> comprobar();
+                case "f" -> mostrarLista();
+                case "g" -> {if(vaciar()){cant=0;}}
                 case "h" -> loop = false;
                 default -> System.out.println("Opcion no disponible");
             }
@@ -65,7 +70,7 @@ public class Listas {
         return in;
     }
     
-    public static void a_opciones(){
+    public static void opciones_insertar(){
         boolean lista_vacia = lista.isEmpty();
         String opcion = "";
         String elemento = "";
@@ -113,7 +118,7 @@ public class Listas {
         }
     }
     
-    public static boolean b_opcion(){
+    public static boolean eliminar(){
         if (lista.isEmpty()){
             System.out.println("No hay nodos a eliminar");
             return false;
@@ -129,7 +134,7 @@ public class Listas {
         return true;
     }
     
-    public static boolean c_opcion(){
+    public static boolean buscar(){
         if (lista.isEmpty()){
             System.out.println("No hay nodos a buscar");
             return false;
@@ -145,7 +150,7 @@ public class Listas {
         return true;
     }
     
-    public static void d_opcion(){
+    public static void tamanio(){
         if (lista.isEmpty()){
             System.out.println("La lista esta vacia");
         } else{
@@ -153,7 +158,7 @@ public class Listas {
         }
     }
     
-    public static void e_opcion(){
+    public static void comprobar(){
         if (lista.isEmpty()){
             System.out.println("La lista esta vacia");
         } else{
@@ -161,11 +166,11 @@ public class Listas {
         }
     }
     
-    public static void f_opcion(){
+    public static void mostrarLista(){
         System.out.println("Contenido de la lista: " + lista);
     }
     
-    public static boolean g_opcion(){
+    public static boolean vaciar(){
         lista.clear();
         System.out.println("Contenido de la lista eliminado");
         return true;
