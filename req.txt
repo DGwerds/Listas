@@ -1,17 +1,19 @@
 codigo
 2211799
 
-Una función que genere al iniciar una lista de N nodos, donde N corresponde a:N = (último dígito del código de estudiante) * 3
+1) Una función que genere al iniciar una lista de N nodos, donde N corresponde a:N = (último dígito del código de estudiante) * 3
 9*3 = 27
 
-a.Insertar el nodo con valor H = (penúltimodigito del código) *16, al inicio dela lista
+2.1) Insertar el nodo con valor H = (penúltimodigito del código) *16, al inicio dela lista
 H = 9*16 = 144
 
-b.Insertar el nodo con valor I= (quintodigito del código) *8, al final de la lista
+2.2) Insertar el nodo con valor I= (quintodigito del código) *8, al final de la lista
 I = 7*8 = 56
 
-c.Insertar el nodo con valor J= (tercerdigito del código) *40, después del nodo con valor H
+2.3) Insertar el nodo con valor J= (tercerdigito del código) *40, después del nodo con valor H
+Despues de H = 144
 J = 1*40 = 40
 
-d.Insertar el nodo con valor K= (cuartodigito del código) *3, antes del nodo con valor I
+2.4) Insertar el nodo con valor K= (cuartodigito del código) *3, antes del nodo con valor I
+Antes de I = 56
 K = 1*3 = 3
